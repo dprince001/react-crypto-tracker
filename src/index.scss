@@ -24,41 +24,177 @@ body {
     justify-content: space-between;
     align-items: center;
     width: 100%;
+    padding: 20px 0 40px;
+
+    .logo {
+      display: flex;
+      align-items: center;
+
+      h1 {
+        margin-right: 5px;
+      }
+    }
+
+    .search-bar {
+      padding: 10px;
+      border-radius: 8px;
+      outline: none;
+      border: none;
+      background-color: rgb(243, 244, 246);
+    }
+  }
+}
+
+.spinner {
+  position: relative;
+  top: 200px;
+  animation: spin 3s infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0);
+  } 100% {
+    transform: rotate(359deg);
   }
 }
 
 .coin-container {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   width: 100%;
+  border-bottom: 1px solid lightgray;
+  padding: 20px 0;
+  // overflow: hidden;
 
   .rank {
     width: 20px;
+    // border: 1px solid rgb(42, 42, 218);
   }
 
   .coin {
     display: flex;
     // justify-content: space-between;
     align-items: center;
+    width: 400px;
     min-width: 250px;
+    // flex-basis: 35%;
+    // border: 1px solid rgb(42, 42, 218);
+
+    div {
+      display: flex;
+
+      .coin-symbol {
+        margin-left: 10px;
+        font-weight: 100;
+      }
+    }
 
     img {
       width: 20px;
+      margin-right: 10px;
+      margin-left: 20px;
     }
   }
 
   .coin-details {
+    flex-basis: 55%;
     display: flex;
-    border-bottom: 1px solid lightgray;
+    justify-content: space-between;
+    align-items: center;
     text-align: right;
+    // overflow-x: scroll;
 
-    .price {
-      // width: 100px;
-      // text-align: right;
+    * {
+      // border: 1px solid rgb(42, 42, 218);
     }
 
-    .price-1h {
-      // width: 100px;
+    
+  }
+}
+
+.title {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  text-align: right;
+  font-weight: bold;
+
+  * {
+    // border: 1px solid rgb(42, 42, 218);
+  }
+
+  .coin-title {
+    display: flex;
+    width: 400px;
+    min-width: 250px;
+
+    .rank {
+      width: 20px;
+      margin-right: 20px;
     }
   }
+
+  .title-details {
+    flex-basis: 55%;
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+.price, .price-title {
+  width: 100px;
+}
+
+.price-1h, .h1-title {
+  width: 50px;
+}
+
+.price-24h, .h24-title {
+  width: 50px;
+}
+
+.h24-volume, .volume-title {
+  width: 150px;
+}
+
+.market-cap, .mkt-cap-title {
+  width: 150px;
+}
+
+.red {
+  color: red;
+}
+
+.green {
+  color: rgb(129, 205, 74);
+}
+
+
+// pagination
+.pages-container {
+  display: flex;
+  list-style: none;
+  color: rgb(42, 42, 218);
+  margin: 20px 0;
+}
+
+.pages-container a {
+  cursor: pointer;
+  padding: 0 10px;
+  margin: 3px;
+  border: 1px solid rgb(42, 42, 218);
+  border-radius: 5px;
+
+  &:hover {
+    background-color: rgb(42, 42, 218);
+    color: white;
+  }
+}
+
+.page-active {
+  background-color: rgb(42, 42, 218);
+  border-radius: 5px;
+  color: white;
+  border: none;
 }

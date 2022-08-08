@@ -14,24 +14,33 @@ const Coin = ({ coinObj }) => {
 
   return (
     <div className="coin-container">
-      <p className="rank">{market_cap_rank}</p>
+      {/* use table  */}
       <div className="coin">
+        <p className="rank">{market_cap_rank}</p>
         <img src={image} />
         <div>
           <h4>{name}</h4>
-          <p>{symbol}</p>
+          <p className="coin-symbol">{symbol}</p>
         </div>
       </div>
 
       <div className="coin-details">
-        <p className="price">{current_price}</p>
-        <p className="price-1h">
-          {price_change_percentage_1h_in_currency.toFixed(2)}
+        <p className="price">${current_price.toLocaleString()}</p>
+        <p
+          className={`price-1h ${
+            price_change_percentage_1h_in_currency < 0 ? "red" : "green"
+          }`}
+        >
+          {price_change_percentage_1h_in_currency.toFixed(2)}%
         </p>
-        <p className="price-24h">
-          {price_change_percentage_24h_in_currency.toFixed(2)}
+        <p
+          className={`price-24h ${
+            price_change_percentage_1h_in_currency < 0 ? "red" : "green"
+          }`}
+        >
+          {price_change_percentage_24h_in_currency.toFixed(2)}%
         </p>
-        <p className="24h-volume">${total_volume.toLocaleString()}</p>
+        <p className="h24-volume">${total_volume.toLocaleString()}</p>
         <p className="market-cap">${market_cap.toLocaleString()}</p>
       </div>
     </div>
