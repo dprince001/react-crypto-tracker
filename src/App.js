@@ -6,12 +6,17 @@ import Coin from "./components/coin/Coin";
 
 import { ReactComponent as Logo } from "../src/assets/icon.svg";
 import { ReactComponent as Spinner } from "../src/assets/spinner.svg";
+
+import { useContext } from "react";
+import { SearchContext } from "./context/searchbar-context";
+
+import SearchBox from "./components/search-box/search-box-comp";
+
 import "./index.scss";
 
 function App() {
   const [coins, setCoins] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [searchInput, setSearchInput] = useState("");
   const [coinPerPage] = useState(20);
   const [currentPage, setCurrentPage] = useState(0);
 
@@ -20,7 +25,7 @@ function App() {
       const getData = async () => {
         setLoading(true);
         const res = await axios.get(
-          "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false&price_change_percentage=1h%2C24h"
+          "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=200&page=1&sparkline=false&price_change_percentage=1h%2C24h"
         );
         setCoins(res.data);
         setLoading(false);
@@ -32,6 +37,40 @@ function App() {
     }
   }, []);
 
+  const [searchloading, setSearchLoading] = useState(false);
+  const [searchInput, setSearchInput] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+
+  // fetch from search api
+  useEffect(() => {
+    try {
+      const getSearchData = async () => {
+        setSearchLoading(true);
+        const res = await axios.get(
+          `https://api.coingecko.com/api/v3/search?query=${searchInput}`
+        );
+        setSearchResults(res.data.coins);
+        setSearchLoading(false);
+      };
+      getSearchData();
+    } catch (error) {
+      alert(error);
+    }
+  }, []);
+
+  // console.log(searchResults);
+
+  const filterArr = searchResults.filter((coin) =>
+    coin.name.toLowerCase().includes(searchInput.toLowerCase())
+  );
+  // console.log(filterArr);
+
+  const { searchBoxOpen, setSearchBoxopen } = useContext(SearchContext);
+
+  const openSearchBox = () => {
+    setSearchBoxopen(true);
+  };
+
   const handleSearchChange = (e) => {
     setSearchInput(e.target.value);
   };
@@ -42,15 +81,6 @@ function App() {
   const coinsToDisplay = coins.slice(start, end);
 
   const gotoPage = ({ selected }) => setCurrentPage(selected);
-
-  const filterArr = coins.filter((coin) =>
-    coin.name.toLowerCase().includes(searchInput.toLowerCase())
-  );
-  // setCoins(filterArr);
-
-  // TODO: create a small dialogue box that shows the searched tokens ...... use context
-
-  // TODO: make losses red and gain green in 1h and 24h values
 
   return (
     <div className="app-container">
@@ -65,8 +95,10 @@ function App() {
           onChange={handleSearchChange}
           value={searchInput}
           className="search-bar"
+          onClick={openSearchBox}
         />
       </div>
+      {searchBoxOpen && <SearchBox array={filterArr}/>}
       <div className="title">
         <div className="coin-title">
           <p className="rank">#</p>
