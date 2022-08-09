@@ -74,21 +74,16 @@ body {
   width: 100%;
   border-bottom: 1px solid lightgray;
   padding: 20px 0;
-  // overflow: auto;
 
   .rank {
     width: 15px;
-    border: 1px solid rgb(42, 42, 218);
   }
 
   .coin {
     display: flex;
-    // justify-content: space-between;
     align-items: center;
     width: 400px;
     min-width: 180px;
-    // flex-basis: 35%;
-    border: 1px solid rgb(42, 42, 218);
     font-size: 14px;
 
     div {
@@ -117,13 +112,7 @@ body {
     
     &::-webkit-scrollbar{
        display: none;
-    }
-
-    * {
-      border: 1px solid rgb(42, 42, 218);
-    }
-
-    
+    }    
   }
 }
 
@@ -133,11 +122,6 @@ body {
   width: 100%;
   text-align: right;
   font-weight: bold;
-  // overflow: auto;
-
-  * {
-    border: 1px solid rgb(42, 42, 218);
-  }
 
   .coin-title {
     display: flex;
@@ -195,7 +179,7 @@ body {
 .pages-container {
   display: flex;
   list-style: none;
-  color: rgb(42, 42, 218);
+  color: rgb(110, 214, 35);
   margin: 20px 0;
 }
 
@@ -203,17 +187,17 @@ body {
   cursor: pointer;
   padding: 0 10px;
   margin: 3px;
-  border: 1px solid rgb(42, 42, 218);
+  border: 1px solid rgb(110, 214, 35);
   border-radius: 5px;
 
   &:hover {
-    background-color: rgb(42, 42, 218);
+    background-color: rgb(110, 214, 35);
     color: white;
   }
 }
 
 .page-active {
-  background-color: rgb(42, 42, 218);
+  background-color: rgb(110, 214, 35);
   border-radius: 5px;
   color: white;
   border: none;
