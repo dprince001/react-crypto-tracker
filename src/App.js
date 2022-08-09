@@ -25,7 +25,7 @@ function App() {
       const getData = async () => {
         setLoading(true);
         const res = await axios.get(
-          "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=200&page=1&sparkline=false&price_change_percentage=1h%2C24h"
+          "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false&price_change_percentage=1h%2C24h"
         );
         setCoins(res.data);
         setLoading(false);
@@ -98,7 +98,7 @@ function App() {
           onClick={openSearchBox}
         />
       </div>
-      {searchBoxOpen && <SearchBox array={filterArr}/>}
+      {searchBoxOpen && <SearchBox array={filterArr} />}
       <div className="title">
         <div className="coin-title">
           <p className="rank">#</p>

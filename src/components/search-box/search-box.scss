@@ -5,9 +5,17 @@
     min-height: 250px;
     position: absolute;
     top: 70px;
-    right: 50px;
+    right: 4vw;
     background-color: white;
     padding: 10px 15px;
+
+    @media (max-width: 800px) {
+        top: 120px;
+        // right: 90px;
+        width: 60vw;
+        left: 50%;
+        transform: translate(-50%);
+    }
 }
 
 .cancel-search {
