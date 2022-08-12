@@ -1,15 +1,16 @@
 import './search-coin.scss'
 
 const SearchCoin = ({coin}) => {
-    const { name, symbol, market_cap_rank } = coin;
+    const { name, symbol, market_cap_rank, thumb } = coin;
 
   return (
     <div className='search-coin'>
         <div>
+            <img src={thumb}/>
             <p>{name}</p>
-            (<span>{symbol}</span>)
+            <span>({symbol})</span>
         </div>
-        <p>#{market_cap_rank}</p>
+        <p className='rank'>#{market_cap_rank}</p>
     </div>
   )
 }
