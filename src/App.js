@@ -14,7 +14,6 @@ import {
 import { TablePagination } from "@mui/material";
 
 
-import Coin from "./components/coin/Coin";
 
 import { ReactComponent as Logo } from "../src/assets/icon.svg";
 import { ReactComponent as Spinner } from "../src/assets/spinner.svg";
@@ -147,22 +146,14 @@ function App() {
         <Table aria-label="simple table">
           <TableHead>
             <TableRow>
+              <TableCell>#</TableCell>
               <TableCell
                 sx={{
                   fontWeight: "bold",
                   position: "sticky",
                   left: 0,
-                  minWidth: 20,
-                }}
-              >
-                #
-              </TableCell>
-              <TableCell
-                sx={{
-                  fontWeight: "bold",
-                  position: "sticky",
-                  left: 0,
-                  minWidth: 200,
+                  minWidth: 230,
+                  background: "white",
                 }}
               >
                 Coin
@@ -180,33 +171,42 @@ function App() {
                 key={row.market_cap_rank}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
-                <TableCell
-                  component="th"
-                  scope="row"
-                  sx={{ position: "sticky", left: 0, minWidth: 20 }}
-                >
+                <TableCell component="th" scope="row">
                   {row.market_cap_rank}
                 </TableCell>
                 <TableCell
                   sx={{
-                    minWidth: 200,
+                    minWidth: 230,
                     position: "sticky",
                     left: 0,
+                    background: "white",
                   }}
                 >
-                  {row.name} ({row.symbol})
+                  {<img src={row.image}/>} {row.name} ({row.symbol})
                 </TableCell>
                 <TableCell>${row.current_price.toLocaleString()}</TableCell>
                 <TableCell
-                  className={`red ${
-                    row.price_change_percentage_1h_in_currency < 0
-                      ? "red"
-                      : "green"
-                  }`}
+                  sx={[
+                    row.price_change_percentage_1h_in_currency < 0 && {
+                      color: "red",
+                    },
+                    row.price_change_percentage_1h_in_currency > 0 && {
+                      color: "green",
+                    },
+                  ]}
                 >
                   {row.price_change_percentage_1h_in_currency.toFixed(2)}%
                 </TableCell>
-                <TableCell>
+                <TableCell
+                  sx={[
+                    row.price_change_percentage_24h_in_currency < 0 && {
+                      color: "red",
+                    },
+                    row.price_change_percentage_24h_in_currency > 0 && {
+                      color: "green",
+                    },
+                  ]}
+                >
                   {row.price_change_percentage_24h_in_currency.toFixed(2)}%
                 </TableCell>
                 <TableCell>${row.total_volume.toLocaleString()}</TableCell>
