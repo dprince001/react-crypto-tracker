@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import ReactPaginate from "react-paginate";
 import {
   TableContainer,
   Table,
@@ -71,12 +70,10 @@ function App() {
     }
   }, []);
 
-  // console.log(searchResults);
 
   const filterArr = searchResults.filter((coin) =>
     coin.name.toLowerCase().includes(searchInput.toLowerCase())
   );
-  // console.log(filterArr);
 
   const { searchBoxOpen, setSearchBoxopen } = useContext(SearchContext);
 
@@ -124,23 +121,6 @@ function App() {
         />
       </div>
       {searchBoxOpen && <SearchBox array={filterArr} />}
-      {/* <div className="title">
-        <div className="coin-title">
-          <p className="rank">#</p>
-          <p>Coin</p>
-        </div>
-        <div className="title-details">
-          <p className="price-title">Price</p>
-          <p className="h1-title">1h</p>
-          <p className="h24-title">24h</p>
-          <p className="volume-title">24h Volume</p>
-          <p className="mkt-cap-title">Market Cap</p>
-        </div>
-      </div>
-      {loading ? <Spinner className="spinner" /> : ""}
-      {coinsToDisplay.map((coin) => {
-        return <Coin coinObj={coin} key={coin.id} />;
-      })} */}
 
       <TableContainer component={Paper}>
         <Table aria-label="simple table">
