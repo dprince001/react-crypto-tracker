@@ -1,6 +1,18 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import ReactPaginate from "react-paginate";
+import {
+  TableContainer,
+  Table,
+  TableHead,
+  TableBody,
+  TableRow,
+  TableCell,
+  Paper,
+} from "@mui/material";
+
+import { TablePagination } from "@mui/material";
+
 
 import Coin from "./components/coin/Coin";
 
@@ -12,12 +24,14 @@ import { SearchContext } from "./context/searchbar-context";
 
 import SearchBox from "./components/search-box/search-box-comp";
 
+
+
 import "./index.scss";
 
 function App() {
   const [coins, setCoins] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [coinPerPage] = useState(20);
+  const [coinPerPage, setCoinPerPage] = useState(20);
   const [currentPage, setCurrentPage] = useState(0);
 
   useEffect(() => {
@@ -80,7 +94,19 @@ function App() {
 
   const coinsToDisplay = coins.slice(start, end);
 
-  const gotoPage = ({ selected }) => setCurrentPage(selected);
+
+  const handleChangePage = (event,newPage) => {
+    setCurrentPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setCoinPerPage(parseInt(event.target.value, 10));
+    setCurrentPage(0);
+  };
+
+  if(loading) {
+    return <Spinner className="spinner" />;
+  }
 
   return (
     <div className="app-container">
@@ -99,7 +125,7 @@ function App() {
         />
       </div>
       {searchBoxOpen && <SearchBox array={filterArr} />}
-      <div className="title">
+      {/* <div className="title">
         <div className="coin-title">
           <p className="rank">#</p>
           <p>Coin</p>
@@ -115,17 +141,91 @@ function App() {
       {loading ? <Spinner className="spinner" /> : ""}
       {coinsToDisplay.map((coin) => {
         return <Coin coinObj={coin} key={coin.id} />;
-      })}
-      {!loading && (
-        <ReactPaginate
-          onPageChange={gotoPage}
-          pageCount={Math.ceil(coins.length / coinPerPage)}
-          activeClassName="page-active"
-          previousClassName="prev-page"
-          nextClassName="next-page"
-          containerClassName="pages-container"
-        />
-      )}
+      })} */}
+
+      <TableContainer component={Paper}>
+        <Table aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell
+                sx={{
+                  fontWeight: "bold",
+                  position: "sticky",
+                  left: 0,
+                  minWidth: 20,
+                }}
+              >
+                #
+              </TableCell>
+              <TableCell
+                sx={{
+                  fontWeight: "bold",
+                  position: "sticky",
+                  left: 0,
+                  minWidth: 200,
+                }}
+              >
+                Coin
+              </TableCell>
+              <TableCell sx={{ fontWeight: "bold" }}>Price</TableCell>
+              <TableCell sx={{ fontWeight: "bold" }}>1h</TableCell>
+              <TableCell sx={{ fontWeight: "bold" }}>24h</TableCell>
+              <TableCell sx={{ fontWeight: "bold" }}>24h Volume</TableCell>
+              <TableCell sx={{ fontWeight: "bold" }}>Market Cap</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {coinsToDisplay.map((row) => (
+              <TableRow
+                key={row.market_cap_rank}
+                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+              >
+                <TableCell
+                  component="th"
+                  scope="row"
+                  sx={{ position: "sticky", left: 0, minWidth: 20 }}
+                >
+                  {row.market_cap_rank}
+                </TableCell>
+                <TableCell
+                  sx={{
+                    minWidth: 200,
+                    position: "sticky",
+                    left: 0,
+                  }}
+                >
+                  {row.name} ({row.symbol})
+                </TableCell>
+                <TableCell>${row.current_price.toLocaleString()}</TableCell>
+                <TableCell
+                  className={`red ${
+                    row.price_change_percentage_1h_in_currency < 0
+                      ? "red"
+                      : "green"
+                  }`}
+                >
+                  {row.price_change_percentage_1h_in_currency.toFixed(2)}%
+                </TableCell>
+                <TableCell>
+                  {row.price_change_percentage_24h_in_currency.toFixed(2)}%
+                </TableCell>
+                <TableCell>${row.total_volume.toLocaleString()}</TableCell>
+                <TableCell>${row.market_cap.toLocaleString()}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+
+      <TablePagination
+        sx={{ align: "center" }}
+        rowsPerPageOptions={[10, 20]}
+        count={coins.length}
+        rowsPerPage={coinPerPage}
+        page={currentPage}
+        onPageChange={handleChangePage}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+      />
     </div>
   );
 }
